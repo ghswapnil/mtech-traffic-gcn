@@ -14,7 +14,7 @@ import numpy as np
 from src.models.adapter import SpatialTemporalAdapter
 from src.data.metr_la import load_metr_la_data
 from src.data.graph import get_symmetric_normalized_adj
-from src.baseline_ttm import masked_mae_torch, masked_rmse_torch, masked_mape_torch
+from src.model1_vanilla_ttm import masked_mae_torch, masked_rmse_torch, masked_mape_torch
 
 class MaskedMAELoss(nn.Module):
     def __init__(self, scaler, null_val=0.0):

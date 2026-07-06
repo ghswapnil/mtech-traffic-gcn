@@ -18,7 +18,7 @@ Notably, our 60-minute RMSE of **8.86** surpasses fully-trained spatial-temporal
 ## Project Structure
 - `src/`: Source code for data loading, graph creation, and training scripts.
   - `models/`: Contains the PyTorch neural network architectures (`adapter.py`, `gcn.py`).
-  - `train_co_finetune.py`: Script to train our best model (Model 5).
+  - `model5_co_finetune.py`: Script to train our best model.
 - `datasets/`: Contains the METR-LA traffic dataset.
 - `report/`: Contains the LaTeX progress report and generated performance plots.
 
@@ -43,13 +43,13 @@ cd ..
 ### 3. Run Training
 To run the best performing Co-Fine-Tuned model:
 ```bash
-python -m src.train_co_finetune
+python -m src.model5_co_finetune
 ```
 
 ## Architecture Evolution
 This repository includes the code to replicate the 5 models discussed in our report:
-1. **Model 1 (Vanilla TTM)**: Zero-shot temporal baseline (`src/baseline_ttm.py`)
-2. **Model 2 (Linear Probing)**: Temporal head fine-tuning (`src/train_linear_probing.py`)
-3. **Model 3 (TTM + GCN Direct)**: Spatial adapter with direct MLP fusion (`src/train.py`)
-4. **Model 4 (TTM + GCN Residual)**: Spatial adapter learning residual corrections (`src/train.py` with residual flag)
-5. **Model 5 (Co-Fine-Tuned)**: Jointly trained temporal head and spatial adapter (`src/train_co_finetune.py`)
+1. **Model 1 (Vanilla TTM)**: Zero-shot temporal baseline (`src/model1_vanilla_ttm.py`)
+2. **Model 2 (Linear Probing)**: Temporal head fine-tuning (`src/model2_linear_probing.py`)
+3. **Model 3 (TTM + GCN Direct)**: Spatial adapter with direct MLP fusion (`src/model3_and_4_gcn_adapter.py`)
+4. **Model 4 (TTM + GCN Residual)**: Spatial adapter learning residual corrections (`src/model3_and_4_gcn_adapter.py --use-residual`)
+5. **Model 5 (Co-Fine-Tuned)**: Jointly trained temporal head and spatial adapter (`src/model5_co_finetune.py`)
