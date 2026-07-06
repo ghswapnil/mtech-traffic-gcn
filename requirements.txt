@@ -1,0 +1,10 @@
+torch==2.12.1
+torch-geometric==2.8.0
+transformers==4.57.6
+h5py==3.16.0
+pandas==3.0.3
+numpy==1.26.4
+matplotlib==3.11.0
+scikit-learn==1.9.0
+networkx==3.6.1
+tsfm_public @ git+https://github.com/ibm-granite/granite-tsfm.git@4db1cfd157767c8de39bedb5c1f90a8d7d6e5850

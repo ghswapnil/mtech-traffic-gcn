@@ -1,0 +1,802 @@
+Deep Learning on Graphs
+Yao Ma and Jiliang Tang
+Book Website:https://yaoma24.github.io/dlg_book/Book Website:https://yaoma24.github.io/dlg_book/Contents
+Preface page x
+Acknowledgements xiii
+1 Deep Learning on Graphs: An Introduction 1
+1.1 Introduction 1
+1.2 Why Deep Learning on Graphs? 1
+1.3 What Content is Covered? 3
+1.4 Who Should Read the Book? 6
+1.5 Feature Learning on Graphs: A Brief History 8
+1.5.1 Feature Selection on Graphs 9
+1.5.2 Representation Learning on Graphs 10
+1.6 Conclusion 13
+1.7 Further Reading 13
+PART ONE FOUNDATIONS 15
+2 Foundations of Graphs 17
+2.1 Introduction 17
+2.2 Graph Representations 18
+2.3 Properties and Measures 19
+2.3.1 Degree 19
+2.3.2 Connectivity 21
+2.3.3 Centrality 23
+2.4 Spectral Graph Theory 26
+2.4.1 Laplacian Matrix 26
+2.4.2 The Eigenvalues and Eigenvectors of the
+Laplacian Matrix 28
+2.5 Graph Signal Processing 29
+iii
+Book Website:https://yaoma24.github.io/dlg_book/iv Contents
+2.5.1 Graph Fourier Transform 30
+2.6 Complex Graphs 33
+2.6.1 Heterogeneous Graphs 33
+2.6.2 Bipartite Graphs 34
+2.6.3 Multi-dimensional Graphs 34
+2.6.4 Signed Graphs 36
+2.6.5 Hypergraphs 37
+2.6.6 Dynamic Graphs 37
+2.7 Computational Tasks on Graphs 39
+2.7.1 Node-focused Tasks 39
+2.7.2 Graph-focused Tasks 41
+2.8 Conclusion 42
+2.9 Further Reading 42
+3 Foundations of Deep Learning 43
+3.1 Introduction 43
+3.2 Feedforward Networks 44
+3.2.1 The Architecture 46
+3.2.2 Activation Functions 47
+3.2.3 Output Layer and Loss Function 50
+3.3 Convolutional Neural Networks 52
+3.3.1 The Convolution Operation and Convolutional
+Layer 52
+3.3.2 Convolutional Layers in Practice 56
+3.3.3 Non-linear Activation Layer 58
+3.3.4 Pooling Layer 58
+3.3.5 An Overall CNN Framework 58
+3.4 Recurrent Neural Networks 59
+3.4.1 The Architecture of Traditional RNNs 60
+3.4.2 Long Short-Term Memory 61
+3.4.3 Gated Recurrent Unit 63
+3.5 Autoencoders 63
+3.5.1 Undercomplete Autoencoders 65
+3.5.2 Regularized Autoencoders 66
+3.6 Training Deep Neural Networks 67
+3.6.1 Training with Gradient Descent 67
+3.6.2 Backpropagation 68
+3.6.3 Preventing Overfitting 71
+3.7 Conclusion 71
+3.8 Further Reading 72
+Book Website:https://yaoma24.github.io/dlg_book/Contents v
+PART TWO METHODS 73
+4 Graph Embedding 75
+4.1 Introduction 75
+4.2 Graph Embedding on Simple Graphs 77
+4.2.1 Preserving Node Co-occurrence 77
+4.2.2 Preserving Structural Role 86
+4.2.3 Preserving Node Status 89
+4.2.4 Preserving Community Structure 91
+4.3 Graph Embedding on Complex Graphs 94
+4.3.1 Heterogeneous Graph Embedding 94
+4.3.2 Bipartite Graph Embedding 96
+4.3.3 Multi-dimensional Graph Embedding 97
+4.3.4 Signed Graph Embedding 99
+4.3.5 Hypergraph Embedding 102
+4.3.6 Dynamic Graph Embedding 104
+4.4 Conclusion 105
+4.5 Further Reading 106
+5 Graph Neural Networks 107
+5.1 Introduction 107
+5.2 The General GNN Frameworks 109
+5.2.1 A General Framework for Node-focused Tasks 109
+5.2.2 A General Framework for Graph-focused Tasks 110
+5.3 Graph Filters 112
+5.3.1 Spectral-based Graph Filters 112
+5.3.2 Spatial-based Graph Filters 122
+5.4 Graph Pooling 128
+5.4.1 Flat Graph Pooling 129
+5.4.2 Hierarchical Graph Pooling 130
+5.5 Parameter Learning for Graph Neural Networks 135
+5.5.1 Parameter Learning for Node Classification 135
+5.5.2 Parameter Learning for Graph Classification 136
+5.6 Conclusion 136
+5.7 Further Reading 137
+6 Robust Graph Neural Networks 138
+6.1 Introduction 138
+6.2 Graph Adversarial Attacks 138
+6.2.1 Taxonomy of Graph Adversarial Attacks 139
+6.2.2 White-box Attack 141
+6.2.3 Gray-box Attack 144
+Book Website:https://yaoma24.github.io/dlg_book/vi Contents
+6.2.4 Black-box Attack 148
+6.3 Graph Adversarial Defenses 151
+6.3.1 Graph Adversarial Training 152
+6.3.2 Graph Purification 154
+6.3.3 Graph Attention 155
+6.3.4 Graph Structure Learning 159
+6.4 Conclusion 160
+6.5 Further Reading 160
+7 Scalable Graph Neural Networks 161
+7.1 Introduction 161
+7.2 Node-wise Sampling Methods 165
+7.3 Layer-wise Sampling Methods 167
+7.4 Subgraph-wise Sampling Methods 171
+7.5 Conclusion 173
+7.6 Further Reading 174
+8 Graph Neural Networks on Complex Graphs 175
+8.1 Introduction 175
+8.2 Heterogeneous Graph Neural Networks 175
+8.3 Bipartite Graph Neural Networks 177
+8.4 Multi-dimensional Graph Neural Networks 178
+8.5 Signed Graph Neural Networks 180
+8.6 Hypergraph Neural Networks 183
+8.7 Dynamic Graph Neural Networks 184
+8.8 Conclusion 186
+8.9 Further Reading 186
+9 Beyond GNNs: More Deep Models on Graphs 187
+9.1 Introduction 187
+9.2 Autoencoders on Graphs 188
+9.3 Recurrent Neural Networks on Graphs 190
+9.4 Variational Autoencoders on Graphs 192
+9.4.1 Variational Autoencoders for Node Represen-
+tation Learning 194
+9.4.2 Variational Autoencoders for Graph Generation 195
+9.5 Generative Adversarial Networks on Graphs 198
+9.5.1 Generative Adversarial Networks for Node
+Representation Learning 199
+9.5.2 Generative Adversarial Networks for Graph
+Generation 200
+9.6 Conclusion 202
+Book Website:https://yaoma24.github.io/dlg_book/Contents vii
+9.7 Further Reading 202
+PART THREE APPLICATIONS 203
+10 Graph Neural Networks in Natural Language Processing 205
+10.1 Introduction 205
+10.2 Semantic Role Labeling 206
+10.3 Neural Machine Translation 209
+10.4 Relation Extraction 209
+10.5 Question Answering 211
+10.5.1 The Multi-hop QA Task 211
+10.5.2 Entity-GCN 212
+10.6 Graph to Sequence Learning 214
+10.7 Graph Neural Networks on Knowledge Graphs 216
+10.7.1 Graph Filters for Knowledge Graphs 216
+10.7.2 Transforming Knowledge Graphs to Simple
+Graphs 217
+10.7.3 Knowledge Graph Completion 218
+10.8 Conclusion 219
+10.9 Further Reading 219
+11 Graph Neural Networks in Computer Vision 220
+11.1 Introduction 220
+11.2 Visual Question Answering 220
+11.2.1 Images as Graphs 222
+11.2.2 Images and Questions as Graphs 223
+11.3 Skeleton-based Action Recognition 225
+11.4 Image Classification 227
+11.4.1 Zero-shot Image Classification 228
+11.4.2 Few-shot Image Classification 229
+11.4.3 Multi-label Image Classification 230
+11.5 Point Cloud Learning 231
+11.6 Conclusion 232
+11.7 Further Reading 233
+12 Graph Neural Networks in Data Mining 234
+12.1 Introduction 234
+12.2 Web Data Mining 234
+12.2.1 Social Network Analysis 235
+12.2.2 Recommender Systems 238
+12.3 Urban Data Mining 242
+Book Website:https://yaoma24.github.io/dlg_book/viii Contents
+12.3.1 Traffic Prediction 242
+12.3.2 Air Quality Forecasting 244
+12.4 Cybersecurity Data Mining 245
+12.4.1 Malicious Account Detection 245
+12.4.2 Fake News Detection 247
+12.5 Conclusion 248
+12.6 Further Reading 249
+13 Graph Neural Networks in Biochemistry and Healthcare 250
+13.1 Introduction 250
+13.2 Drug Development and Discovery 250
+13.2.1 Molecule Representation Learning 251
+13.2.2 Protein Interface Prediction 252
+13.2.3 Drug-Target Binding Affinity Prediction 254
+13.3 Drug Similarity Integration 256
+13.4 Polypharmacy Side Effect Prediction 257
+13.5 Disease Prediction 260
+13.6 Conclusion 262
+13.7 Further Reading 262
+PART FOUR ADV ANCES 263
+14 Advanced Topics in Graph Neural Networks 265
+14.1 Introduction 265
+14.2 Deeper Graph Neural Networks 266
+14.2.1 Jumping Knowledge 268
+14.2.2 DropEdge 268
+14.2.3 PairNorm 268
+14.3 Exploring Unlabeled Data via Self-supervised Learning 269
+14.3.1 Node-focused Tasks 269
+14.3.2 Graph-focused Tasks 272
+14.4 Expressiveness of Graph Neural Networks 273
+14.4.1 Weisfeiler-Lehman Test 274
+14.4.2 Expressiveness 276
+14.5 Conclusion 277
+14.6 Further Reading 277
+15 Advanced Applications in Graph Neural Networks 279
+15.1 Introduction 279
+15.2 Combinatorial Optimization on Graphs 279
+15.3 Learning Program Representations 281
+Book Website:https://yaoma24.github.io/dlg_book/Contents ix
+15.4 Reasoning Interacting Dynamical Systems in Physics 283
+15.5 Conclusion 284
+15.6 Further Reading 284
+Bibliography 287
+Book Website:https://yaoma24.github.io/dlg_book/Preface
+Graphs have been leveraged to denote data from various domains ranging
+from social science, linguistics to chemistry, biology, and physics. Meanwhile,
+numerous real-world applications can be treated as computational tasks on
+graphs. For examples, air quality forecasting can be regarded as a node clas-
+sification task, friends recommendation in social networks can be solved as a
+link prediction task and protein interface prediction can be regarded as a graph
+classification task. To better take advantage of modern machine learning mod-
+els for these computational tasks, effectively representing graphs plays a key
+role. There are two major ways to extract features to represent graphs includ-
+ing feature engineering and representation learning. Feature engineering relies
+on hand-engineered features, which is time-consuming and often not optimal
+for given downstream tasks. While representation learning is to learn features
+automatically, which requires minimal human efforts and is adaptive to given
+downstream tasks. Thus, representation learning on graphs has been exten-
+sively studied.
+The field of graph representation learning has been greatly developed over
+the past decades that can be roughly divided into three generations includ-
+ing traditional graph embedding, modern graph embedding, and deep learn-
+ing on graphs. As the first generation of graph representation learning, tra-
+ditional graph embedding has been investigated under the context of classic
+dimension reduction techniques on graphs such as IsoMap, LLE, and eigen-
+map. Word2vec is to learn word representations from a large corpus of text
+and the generated word representations have advanced many natural language
+processing tasks. The successful extensions of word2vec to the graph domain
+have started the second generation of representation learning on graphs, i.e.,
+modern graph embedding. Given the huge success of deep learning techniques
+in representation learning in the domains of images and text, efforts have been
+x
+Book Website:https://yaoma24.github.io/dlg_book/Preface xi
+made to generalize them to graphs, which have opened a new chapter of graph
+representation learning, i.e., deep learning on graphs.
+More and more evidence has demonstrated that the third generation of graph
+representation learning especially graph neural networks (GNNs) has tremen-
+dously facilitated computational tasks on graphs including both node-focused
+and graph-focused tasks. The revolutionary advances brought by GNNs have
+also immensely contributed to the depth and breadth of the adoption of graph
+representation learning in real-world applications. For the classical application
+domains of graph representation learning such as recommender systems and
+social network analysis, GNNs result in state-of-the-art performance and bring
+them into new frontiers. Meanwhile, new application domains of GNNs have
+been continuously emerging such as combinational optimization, physics, and
+healthcare. These wide applications of GNNs enable diverse contributions and
+perspectives from disparate disciplines and make this research field truly inter-
+disciplinary.
+Graph representation learning is a rapidly growing field. It has attracted sig-
+nificant amounts of attention from different domains and consequently accu-
+mulated a large body of literature. Thus, it is a propitious time to systematically
+survey and summarize this field. This book is our diligent attempt to achieve
+this goal by taking advantage of our teaching and research experience of many
+years in this field. In particular, we aim to help researchers to acquire essential
+knowledge of graph representation learning and its wide range of applications
+and understand its advances and new frontiers.
+An Overview of the Book. This book provides a comprehensive introduc-
+tion to graph representation learning with a focus on deep learning on graphs
+especially GNNs. It consists of four parts: Foundations, Methods, Applica-
+tions, and Advances. The Foundations part introduces the necessary back-
+ground and basic concepts of graphs and deep learning. Topics covered by
+the Methods part include modern graph embedding, GNNs for both simple and
+complex graphs, the robustness and scalability issues of GNNs, and deep graph
+models beyond GNNs. Each of these topics is covered by a chapter with funda-
+mental concepts and technical details on representative algorithms. The Appli-
+cations part presents GNN applications in the most typical domains including
+Natural Language Processing, Computer Vision, Data Mining, Biochemistry,
+and Healthcare. One chapter is used to cover the most representative sub-fields
+advanced by GNNs for each domain. New emerging methods and application
+domains are discussed by the Advances part. For each chapter, further reading
+is included at the end for readers who are interested in more advanced topics
+and recent trends.
+Target Audience.This book is designed to be as self-contained as possible
+Book Website:https://yaoma24.github.io/dlg_book/xii Preface
+though the basic background of graph theory, calculus, linear algebra, prob-
+ability, and statistics can help better understand its technical details. Thus, it
+is suitable for a wide range of readers with diverse backgrounds and different
+purposes of reading. This book can serve as both a learning tool and a reference
+for students at the senior undergraduate or graduate levels who want to obtain
+a comprehensive understanding of this research field. Researchers who wish
+to pursue this research field can consider this book as a starting point. Project
+managers and practitioners can learn from GNNs applications in the book on
+how to adopt GNNs in their products and platforms. Researchers outside of
+computer science can find an extensive set of examples from this book on how
+to apply GNNs to different disciplines.
+Yao Ma
+Jiliang Tang
+East Lansing, MI
+August, 2020
+Book Website:https://yaoma24.github.io/dlg_book/Acknowledgements
+We start by acknowledging our families to whom this book is dedicated. This
+book would not have been possible without their selfless support and encour-
+agement.
+Graph representation learning has grown tremendously in the past decade
+from traditional graph embedding to modern graph embedding and graph neu-
+ral networks. We have had the fortune to witness these three generations. This
+evolution is impossible without pioneering research performed by numerous
+researchers. Meanwhile, increasing efforts have been made to take advantage
+of graph representation learning to advance applications from many domains.
+Graph representation learning has become a truly interdisciplinary research
+field. We would like to acknowledge all people contributing to this field. Their
+efforts not only enable us to have a book on this field but also make it one of
+the most popular topics in machine learning.
+The idea of writing this book is strongly inspired by Huan Liu (Arizona State
+University). He has been working on feature selection for decades. We began
+the journey on graph representation learning by his ingenious suggestion on
+feature selection on graphs in 2010. We would like to thank Charu Aggarwal
+(IBM Research) and Shiyu Chang (University of California, Santa Barbara)
+with whom we started the research of modern graph embedding in 2014. We
+have worked in this field since 2010 and we got immense support from our
+collaborators. In particular, we would like to express our tremendous grati-
+tude to Salem Alelyani (King Khalid University), Yi Chang (Jilin University),
+Ken Frank (Michigan State University), Huiji Gao (LinkedIn), Xia Hu (Texas
+A&M University), Anil Jain (Michigan State University), Shuiwang Ji (Texas
+A&M University), Jundong Li (University of Virginia), Zitao Liu (TAL Edu-
+cation Group), Sinem Mollaoglu (Michigan State University), Shin-Han Shiu
+(Michigan State University), Kai Shu (Illinois Institute of Technology), Pang-
+Ning Tan (Michigan State University), Lei Tang (Lyft), Guanhua Tu (Michigan
+xiii
+Book Website:https://yaoma24.github.io/dlg_book/xiv Acknowledgements
+State University), Suhang Wang (Pennsylvania State University), Lingfei Wu
+(JD.com), Yuying Xie (Michigan State University), Ming Yan(Michigan State
+University), Dawei Yin (Baidu, Inc.), Mi Zhang (Michigan State University)
+and Jiayu Zhou (Michigan State University).
+We would like to thank the current and former members of the Data Sci-
+ence and Engineering Laboratory at Michigan State University. They include
+Meznah Almutairy, Norah Alfadhli, Aaron Brookhouse, Jamell Dacon, Daniel
+K.O-Dankwa, Tyler Derr, Jiayuan Ding, Wenqi Fan, Haoyu Han, Jiangtao
+Huang, Hamid Karimi, Wei Jin, Juanhui Li, Yaxin Li, Haochen Liu, Hua Liu,
+Xiaorui Liu, Jie Ren, Namratha Shah, Harry Shomer, Yuxuan Wan, Wentao
+Wang, Yiqi Wang, Xochitl Weiss, Hongzhi Wen, Xiaoyang Wang, Xin Wang,
+Zhiwei Wang, Han Xu, and Xiangyu Zhao. They provided invaluable com-
+ments and feedback for the early drafts of this book.
+The computer science and engineering department at Michigan State Uni-
+versity provided us a fantastic atmosphere for this book. Our research on graph
+representation learning has been, in part, supported by National Science Foun-
+dation, Army Research Office, NEC Labs America, Snap Inc., The Ford Motor
+Company, JD.com, Criteo Labs, and TAL Education Group. In particular, Hec-
+tor Munoz-Avila, Zhengchang Chen, Wei Ding, Purush S. Iyer, Balakrishnan
+Prabhakaran, Neil Shah, Finbarr Sloane, Maria Zemankova, and Aidong Zhang
+have been supportive of our research in graph representation learning. It was a
+pleasure working with Cambridge University Press. We would like to acknowl-
+edge Lauren Cowles, a senior editor of Mathematics and Computer Sciences
+at Cambridge, for her support, and the helpful staffat Cambridge, Amy He and
+Mark Fox, as well as Harshavardhanan Udhayakumar and his colleagues at SPi
+Global for their efforts on the production of the book.
+Book Website:https://yaoma24.github.io/dlg_book/1
+Deep Learning on Graphs: An Introduction
+1.1 Introduction
+We start this chapter by answering a few questions about the book. First, we
+discuss why we should pay attention to deep learning on graphs. In particular,
+why do we represent real-world data as graphs, why do we want to bridge deep
+learning with graphs, and what are challenges for deep learning on graphs?
+Second, we introduce what content this book will cover. Specifically, which
+topics we will discuss and how we organize these topics? Third, we provide
+guidance about who should read this book. Especially what is our target au-
+dience and how to read this book with different backgrounds and purposes of
+reading? To better understand deep learning on graphs, we briefly review the
+history under the more general context of feature learning on graphs.
+1.2 Why Deep Learning on Graphs?
+Since data from real-world applications have very diverse forms, from ma-
+trix and tensor to sequence and time series, a natural question that arises is
+why we attempt to represent data as graphs. There are two primary moti-
+vations. First, graphs provide a universal representation of data. Data from
+many systems across various areas can be explicitly denoted as graphs such
+as social networks, transportation networks, protein-protein interaction net-
+works, knowledge graphs, and brain networks. Meanwhile, as indicated by
+Figure 1.1, numerous other types of data can be transformed into the form
+of graphs (Xu, 2017). Second, a vast number of real-world problems can be
+addressed as a small set of computational tasks on graphs. Inferring nodes’ at-
+tributes, detecting anomalous nodes (e.g., spammers or terrorists), identifying
+relevant genes to diseases, and suggesting medicines to patients can be sum-
+1
+Book Website:https://yaoma24.github.io/dlg_book/2 Deep Learning on Graphs: An Introduction
+Raw	Data	
+Pairwise
+GraphsLossless
+Lossy
+Weighted	Pairwise
+Directed	Pairwise
+Simple	Graph
+Tensor
+Temporal	Pairwise
+Matrix
+Group
+Sequential
+Diffusion
+Time	Series
+Weighted	Graph
+Directed	Graph
+Temporal	Graph
+Dynamic	Graph
+Heterogeneous
+Graph
+Hyper	Graph
+Higher-order	Graph
+Figure 1.1 Representing real-world data as graphs. The figure is reproduced
+from (Xu, 2017). Solid lines are utilized to denote lossless representations, while
+dotted lines are used to indicate lossy representations. Note that we replace “net-
+work” in the original figure with “graph” .
+marized as the problem of node classification (Bhagat et al., 2011). Recom-
+mendations, polypharmacy side effect prediction, drug-target interaction iden-
+tification, and knowledge graph completion are essentially the problem of link
+prediction (Liben-Nowell and Kleinberg, 2007).
+Nodes on graphs are inherently connected that suggests nodes not indepen-
+dent. However, traditional machine learning techniques often assume that data
+is independent and identically distributed. Thus, they are not suitable to di-
+rectly tackle the computational tasks on graphs. There are two main directions
+to develop solutions. As shown in Figure 1.2, we will use node classification
+as an illustrative example to discuss these two directions. One direction is to
+build a new mechanism specific to graphs. The classification problem designed
+for graphs is known as collective classification (Sen et al., 2008) as demon-
+strated in Figure 1.2a. Different from traditional classification, for a node, col-
+Book Website:https://yaoma24.github.io/dlg_book/1.3 What Content is Covered? 3
+lective classification considers not only the mapping between its features and
+its label but also the mapping for its neighborhood. The other direction is to
+flatten a graph by constructing a set of features to denote its nodes where tra-
+ditional classification techniques can be applied, as illustrated in Figure 1.2b.
+This direction can take advantage of traditional machine learning techniques;
+thus, it has become increasingly popular and dominant. The key to the suc-
+cess of this direction is how to construct a set of features for nodes (or node
+representations). Deep learning has been proven to be powerful in represen-
+tation learning that has greatly advanced various domains such as computer
+vision, speech recognition, and natural language processing. Therefore, bridg-
+ing deep learning with graphs present unprecedented opportunities. However,
+deep learning on graphs also faces immense challenges. First, traditional deep
+learning has been designed for regular structured data such as images and se-
+quences, while graphs are irregular where nodes in a graph are unordered and
+can have distinct neighborhoods. Second, the structural information for regular
+data is simple; while that for graphs is complicated especially given that there
+are various types of complex graphs (as shown in Figure 1.1) and nodes and
+edges can associate with rich side information; thus traditional deep learning
+is not sufficient to capture such rich information. A new research field has been
+cultivated – deep learning on graphs, embracing unprecedented opportunities
+and immense challenges.
+1.3 What Content is Covered?
+The high-level organization of the book is demonstrated in Figure 1.3. The
+book consists of four parts to best accommodate our readers with diverse
+backgrounds and purposes of reading. Part ONE introduces basic concepts;
+Part TWO discusses the most established methods; Part THREE presents the
+most typical applications, and Part FOUR describes advances of methods and
+applications that tend to be important and promising for future research. For
+each chapter, we first motivate the content that will be covered, then present the
+material with compelling examples and technical details; and finally, provide
+more relevant content as further reading. Next, we briefly elaborate on each
+chapter.
+• Part ONE: Foundations. These chapters focus on the basics of graphs and
+deep learning that will lay the foundations for deep learning on graphs. In
+Chapter 2, we introduce the key concepts and properties of graphs, Graph
+Fourier Transform, graph signal processing, and formally define various
+Book Website:https://yaoma24.github.io/dlg_book/4 Deep Learning on Graphs: An Introduction
+Collective
+Classification
+Graph
+Output
+(a) Collective classification
+Node	
+Features
+Graph
+Traditional	
+Classification
+Output (b) Traditional classification with node
+feature extraction
+Figure 1.2 Two major directions to develop solutions for node classification on
+graphs
+types of complex graphs and computational tasks on graphs. In Chapter 3,
+we discuss a variety of basic neural network models, key approaches to train
+deep models, and practical techniques to prevent overfitting during training.
+• Part TWO: Methods. These chapters cover the most established methods
+Book Website:https://yaoma24.github.io/dlg_book/1.3 What Content is Covered? 5
+1.	Introduction
+2.	Foundations	of	Graphs
+Part	One:	Foundations
+3.	Foundations	of	Deep	Learning
+4.	Graph	Embedding
+Part	Two:	Methods
+5.	Graph	Neural	Networks
+6.	Robust	Graph	Neural	Networks
+7.	Scalable	Graph	Neural	Networks
+8.	Graph	Neural	Networks	on	Complex	Graphs
+9.	Beyond	GNNs:	More	Deep	Models	on	Graphs
+10.	Graph	Neural	Networks	in	Natural	Language	Processing
+Part	Three:	Applications	
+11.	Graph	Neural	Networks	in	Computer	Vision
+12.	Graph	Neural	Networks	in	Data	Mining	
+13.	Graph	Neural	Networks	in	Biochemistry	and	Healthcare
+14.	Advanced	Methods	in	Graph	Neural	Networks
+Part	Four:	Advances
+15.	Advanced	Applications	in	Graph	Neural	Networks
+Figure 1.3 The high-level organization of the book
+Book Website:https://yaoma24.github.io/dlg_book/6 Deep Learning on Graphs: An Introduction
+of deep learning on graphs from the basic to advanced settings. In Chap-
+ter 4, we introduce a general graph embedding framework from the infor-
+mation preserving perspective, provide technical details on representative
+algorithms to preserve numerous types of information on graphs and present
+embedding approaches specifically designed for complex graphs. A typical
+graph neural network (GNN) model consists of two important operations,
+i.e., the graph filtering operation and the graph pooling operation. In Chap-
+ter 5, we review the state of the art graph filtering and pooling operations
+and discuss how to learn the parameters of GNNs for a given downstream
+task. As the generalizations of traditional deep models to graphs, GNNs in-
+herit the drawbacks of traditional deep models and are vulnerable to adver-
+sarial attacks. In Chapter 6, we focus on concepts and definitions of graph
+adversarial attacks and detail representative adversarial attack and defense
+techniques. GNNs perform the recursive expansion of neighborhoods across
+layers. The expansion of the neighborhood for a single node can rapidly in-
+volve a large portion of the graph or even the whole graph. Hence, scala-
+bility is a pressing issue for GNNs. We detail representative techniques to
+scale GNNs in Chapter 7. In Chapter 8, we discuss GNN models that have
+been designed for more complicated graphs. To enable deep learning tech-
+niques to advance more tasks on graphs under wider settings, we introduce
+numerous deep graph models beyond GNNs in Chapter 9.
+• Part THREE: Applications. Graphs provide a universal representation for
+real-world data; thus, methods of deep learning on graphs have been applied
+to various fields. These chapters present the most typical applications of
+GNNs, including Natural Language Processing in Chapter 10, Computer
+Vision in Chapter 11, Data Mining in Chapter 12 and Biochemistry and
+Healthcare in Chapter 13.
+• Part FOUR: Advances. These chapters focus on recent advances in both
+methods and applications. In Chapter 14, we introduce advanced methods
+in GNNs such as expressiveness, depth, fairness, interpretability, and self-
+supervised learning. We discuss more areas that GNNs have been applied
+to, including Combinatorial Optimization, Physics, and Program Represen-
+tation in Chapter 15.
+1.4 Who Should Read the Book?
+This book is easily accessible to readers with a computer science background.
+Basic knowledge of calculus, linear algebra, probability, and statistics can help
+understand its technical details in a better manner. This book has a wide range
+Book Website:https://yaoma24.github.io/dlg_book/1.4 Who Should Read the Book? 7
+2 3
+4
+8
+7 5
+6
+9
+10 11
+12
+13
+14
+15
+Figure 1.4 The guidance on how to read this book. Note that the number in the
+circle indicates the corresponding chapter as shown in Figure 1.3.
+of target audiences. One target audience is senior undergraduate and gradu-
+ate students interested in data mining, machine learning, and social network
+analysis. This book can be independently used for a graduate seminar course
+on deep learning on graphs. It also can be utilized as a part of a course. For
+example, Part TWO and Part FOUR can be considered as advanced topics in
+courses of data mining, machine learning, and social network analysis, and
+Part THREE can be used as advanced methods in solving traditional tasks
+Book Website:https://yaoma24.github.io/dlg_book/8 Deep Learning on Graphs: An Introduction
+in computer vision, natural language processing, and healthcare. Practition-
+ers and project managers, who want to learn the basics and tangible examples
+of deep learning on graphs and adopt graph neural networks into their prod-
+ucts and platforms, are also our target audience. Graph neural networks have
+been applied to benefit numerous disciplines beyond computer science. Thus,
+another target audience is researchers who do not have a computer science
+background but want to use graph neural networks to advance their disciplines.
+Readers with different backgrounds and purposes of reading should go through
+the book differently. The suggested guidance on how to read this book is
+demonstrated in Figure 1.4. If readers aim to understand graph neural net-
+work methods on simple graphs (or Chapter 5), knowledge about foundations
+of graphs and deep learning and graph embedding is necessary (or Chapters 2,
+3 and 4). Suppose readers want to apply graph neural networks to advance
+healthcare (or Chapter 13). In that case, they should first read prerequisite ma-
+terials in foundations of graphs and deep learning, graph embedding and graph
+neural networks on simple and complex graphs. (or Chapters 2, 3, 4, 5,
+and 8). For Part THREE, we assume that the readers should have the necessary
+background in the corresponding application field. Besides, readers should feel
+free to skip some chapters if they have already been equipped with the corre-
+sponding background. Suppose readers know the foundations of graphs and
+deep learning. In that case, they should skip Chapters 2 and 3 and only read
+Chapters 4 and 5 to understand GNNs on simple graphs.
+1.5 Feature Learning on Graphs: A Brief History
+As aforementioned, to take advantage of traditional machine learning for com-
+putational tasks on graphs, it is desired to find vector node representations. As
+shown in Figure 1.5, there are mainly two ways to achieve this goal: feature
+engineering and feature learning. Feature engineering relies on hand-designed
+features such as node degree statistics, while feature learning is to learn node
+features automatically. On the one hand, we often do not have prior knowledge
+about what features are essential, especially for a given downstream task; thus,
+features from feature engineering could be suboptimal for the downstream
+task. The process requires an immense amount of human efforts. On the other
+hand, feature learning is to learn features automatically, and the downstream
+task can guide the process. Consequently, the learned features are likely to
+be suitable for the downstream task that often obtain better performance than
+those via feature engineering. Meanwhile, the process requires minimal human
+intervention and can be easily adapted to new tasks. Thus, feature learning on
+Book Website:https://yaoma24.github.io/dlg_book/1.5 Feature Learning on Graphs: A Brief History 9
+Feature	
+Engineering
+Feature	
+Learning
+Feature	
+Selection
+Shallow
+Models
+Deep	
+Models
+Representation	
+Learning
+Node	Feature
+Extraction
+Figure 1.5 Node feature extraction
+graphs has been extensively studied, and various types of feature learning tech-
+niques have been proposed to meet different requirements and scenarios. We
+roughly divide these techniques into feature selection on graphs that aims to
+remove irrelevant and redundant node features and representation learning on
+graphs that targets on generating a set of new node features. In this section,
+we briefly review these two groups of techniques that provide a general and
+historical context for readers to understand deep learning on graphs.
+1.5.1 Feature Selection on Graphs
+Real-world data is often high-dimensional, and there exist noisy, irrelevant,
+and redundant features (or dimensions), particularly when considering a given
+Book Website:https://yaoma24.github.io/dlg_book/10 Deep Learning on Graphs: An Introduction
+task. Feature selection aims to automatically select a small subset of features
+that have minimal redundancy but maximal relevance to the target, such as the
+class labels under the supervised setting. In many applications, the original fea-
+tures are crucial for knowledge extraction and model interpretation. For exam-
+ple, in genetic analysis for cancer study, in addition to differentiating cancerous
+tissues, it is of greater importance to identify the genes (i.e., original features)
+that induce cancerogenesis. In these demanding applications, feature selection
+is particularly preferred since it maintains the original features, and their se-
+mantics usually provide critical insights to the learning problem. Traditional
+feature selection assumes that data instances are independent and identically
+distributed (i.i.d.). However, data samples in many applications are embedded
+in graphs that are inherently not i.i.d.. It has motivated the research area of
+feature selection on graphs. Given a graphG = {V, E} where V is the node set
+and E is the edge set, we assume that each node is originally associated with a
+set of d features F = { f1, f2, . . . , fd}. Feature selection on graphs aims to select
+K features from F to denote each node where K ≪ d. The problem was first
+investigated under the supervised setting in (Tang and Liu, 2012a; Gu and Han,
+2011). A linear classifier is employed to map from the selected features to the
+class labels, and a graph regularization term is introduced to capture structural
+information for feature selection. In particular, the term aims to ensure that
+connected nodes with the selected features can be mapped into similar labels.
+Then, the problem was further studied under the unsupervised setting (Wei
+et al., 2016, 2015; Tang and Liu, 2012b). In (Tang and Liu, 2012b), pseudo
+labels are extracted from the structural information that serve as the supervi-
+sion to guide the feature selection process. In (Wei et al., 2016), both the node
+content and structural information are assumed to be generated from a set of
+high-quality features that can be obtained by maximizing the likelihood of
+the generation process. Later on, the problem has been extended from simple
+graphs to complex graphs such as dynamic graphs (Li et al., 2016), multi-
+dimensional graphs (Tang et al., 2013b), signed graphs (Cheng et al., 2017;
+Huang et al., 2020) and attributed graphs (Li et al., 2019b).
+1.5.2 Representation Learning on Graphs
+Different from feature selection on graphs, representation learning on graphs is
+to learn a set of new node features. It has been extensively studied for decades
+and has been dramatically accelerated by deep learning. In this subsection, we
+will give it a brief historical review from shallow models to deep models.
+At the early stage, representation learning on graphs has been studied un-
+der the context of spectral clustering (Shi and Malik, 2000; Ng et al., 2002),
+Book Website:https://yaoma24.github.io/dlg_book/1.5 Feature Learning on Graphs: A Brief History 11
+graph-based dimension reduction (Belkin and Niyogi, 2003; Tenenbaum et al.,
+2000; Roweis and Saul, 2000), and matrix factorization (Zhu et al., 2007; Tang
+et al., 2013a; Koren et al., 2009). In spectral clustering (Shi and Malik, 2000;
+Ng et al., 2002), data points are considered as nodes of a graph, and then clus-
+tering is to partition the graph into communities of nodes. One key step for
+spectral clustering is spectral embedding. It aims to embed nodes into a low-
+dimensional space where traditional clustering algorithms such as k-means can
+be applied to identify clusters. Techniques of graph-based dimension reduc-
+tion can be directly applied to learn node representations. These approaches
+typically build an affinity graph using a predefined distance (or similarity)
+function based on the raw features of data samples. They aim to learn node
+representations to preserve structural information of this affinity graph. For ex-
+ample, IsoMap (Tenenbaum et al., 2000) is to preserve the global geometry
+via geodesics, while LLE (Roweis and Saul, 2000) and eigenmap (Belkin and
+Niyogi, 2003) are to preserve local neighborhoods in the affinity graph. The
+methods mentioned above often need to perform eigendecomposition on the
+affinity matrix (or adjacency matrix or Laplacian matrix). Thus, they are of-
+ten computationally expensive. Matrix is one of the most popular approaches
+to denote graphs such as adjacency matrix, incidence matrix, and Laplacian
+matrix. As a result, matrix factorization can be naturally applied to learn node
+representations. Suppose we use the adjacency matrix to denote a graph. In that
+case, it aims to embed nodes into a low-dimensional space where the new node
+representations can be utilized to reconstruct the adjacency matrix. A docu-
+ment corpus can be denoted as a bipartite graph where documents and words
+are nodes, and an edge exists between a word and a document if the word
+appears in the document. LSI has employed truncated SVD to learn represen-
+tations of documents and words (Deerwester et al., 1990). In recommender
+systems, interactions between users and items can be captured as a bipartite
+graph, and matrix factorization has been employed to learn representations of
+users and items for recommendations (Koren et al., 2009). Matrix factoriza-
+tion is also leveraged to learn node representations for node classification (Zhu
+et al., 2007; Tang et al., 2016a), link prediction (Menon and Elkan, 2011; Tang
+et al., 2013a) and community detection (Wang et al., 2011). A family of mod-
+ern graph embedding algorithms we will introduce later can also be unified as
+matrix factorization (Qiu et al., 2018b).
+Word2vec is a technique to generate word embeddings (Mikolov et al.,
+2013) . It takes a large corpus of text as input and produces a vector repre-
+sentation for each unique word in the corpus. The huge success of Word2vec
+in various natural language processing tasks has motivated increasing efforts
+to apply Word2vec, especially the Skip-gram model to learn node representa-
+Book Website:https://yaoma24.github.io/dlg_book/12 Deep Learning on Graphs: An Introduction
+tions in the graph domain. DeepWalk (Perozzi et al., 2014) takes the first step
+to achieve this goal. Specifically, nodes in a given graph are treated as words
+of an artificial language, and sentences in this language are generated by ran-
+dom walks. Then, it uses the Skip-gram model to learn node representations,
+which preserves the node co-occurrence in these random walks. After that, a
+large body of works have been developed in three major directions – (1) De-
+veloping advanced methods to preserve node co-occurrence (Tang et al., 2015;
+Grover and Leskovec, 2016; Cao et al., 2015); (2) Preserving other types of
+information such as node’s structural role (Ribeiro et al., 2017), community
+information (Wang et al., 2017c) and node status (Ma et al., 2017; Lai et al.,
+2017; Gu et al., 2018); and (3) Designing frameworks for complex graphs such
+as directed graphs (Ou et al., 2016), heterogeneous graphs (Chang et al., 2015;
+Dong et al., 2017), bipartite graphs (Gao et al., 2018b), multi-dimensional
+graphs (Ma et al., 2018d), signed graphs (Wang et al., 2017b), hyper graphs (Tu
+et al., 2018), and dynamic graphs (Nguyen et al., 2018; Li et al., 2017a).
+Given the power and the success of DNNs in representation learning, in-
+creasing efforts have been made to generalize DNNs to graphs. These meth-
+ods are known as graph neural networks (GNNs) that can be roughly divided
+into spatial approaches and spectral approaches. Spatial approaches explicitly
+leverage the graph structure, such as spatially close neighbors, and the first
+spatial approach was introduced by (Scarselli et al., 2005). Spectral approaches
+utilize the spectral view of graphs by taking advantage of Graph Fourier Trans-
+form and the Inverse Graph Fourier Transform (Bruna et al., 2013). In the era
+of deep learning, GNNs have been rapidly developed in the following aspects.
+• A huge amount of new GNN models have been introduced including spec-
+tral approaches (Bruna et al., 2013; Defferrard et al., 2016; Kipf and Welling,
+2016a) and spatial approaches (Atwood and Towsley, 2016; Niepert et al.,
+2016; Gilmer et al., 2017; Monti et al., 2017; Veliˇckovi´c et al., 2017; Hamil-
+ton et al., 2017a).
+• For graph-focused tasks such as graph classification, the representation of
+the whole graph is desired. Thus, numerous pooling methods have been in-
+troduced to obtain the graph representation from node representations (Li
+et al., 2015; Ying et al., 2018c; Gao and Ji, 2019; Ma et al., 2019b).
+• Traditional DNNs are vulnerable to adversarial attacks. GNNs inherit this
+drawback. A variety of graph adversarial attacks have been studied (Z¨ugner
+et al., 2018; Z ¨ugner and G ¨unnemann, 2019; Dai et al., 2018; Ma et al.,
+2020a) and various defense techniques have been developed (Dai et al.,
+2018; Zhu et al., 2019a; Tang et al., 2019; Jin et al., 2020b).
+• As aforementioned, scalability is a pressing issue for GNNs. Many strategies
+Book Website:https://yaoma24.github.io/dlg_book/1.6 Conclusion 13
+have been studied to allow GNNs scale to large graphs (Chen et al., 2018a,b;
+Huang et al., 2018).
+• GNN models have been designed to handle complex graphs such as het-
+erogeneous graphs (Zhang et al., 2018b; Wang et al., 2019i; Chen et al.,
+2019b), bipartite graphs (He et al., 2019), multi-dimensional graphs (Ma
+et al., 2019c), signed graphs (Derr et al., 2018), hypergraphs (Feng et al.,
+2019b; Yadati et al., 2019), and dynamic graphs (Pareja et al., 2019).
+• Diverse deep architectures have been generalized to graphs such as autoen-
+coder (Wang et al., 2016; Cao et al., 2016), variational eutoencoder (Kipf
+and Welling, 2016b), recurrent neural networks (Tai et al., 2015; Liang et al.,
+2016) and generative adversarial networks (Wang et al., 2018a).
+• As graphs are a universal data representation, GNNs have been applied to
+advance many fields such as natural language processing, computer vision,
+data mining, and healthcare.
+1.6 Conclusion
+In this chapter, we discussed the opportunities and challenges when we bridge
+deep learning with graphs that have motivated the focus of this book – deep
+learning on graphs. The book will cover the essential topics of deep learning
+on graphs that are organized into four parts to accommodate readers with di-
+verse backgrounds and purposes of reading, including foundations, methods,
+applications, and advances. This book can benefit a broader range of read-
+ers, including senior undergraduate students, graduate students, practitioners,
+project managers, and researchers from various disciplines. To provide more
+context for readers, we give a brief historical review on the area of feature
+learning on graphs.
+1.7 Further Reading
+In this chapter, we have briefly reviewed the history of feature selection on
+graphs. If readers want to know more about feature selection, there are sev-
+eral important books (Liu and Motoda, 2012, 2007) and comprehensive sur-
+veys (Tang et al., 2014a). An open-source feature selection repository named
+scikit-feature has been developed, consisting of most of the popular feature
+selection algorithms (Li et al., 2017b). Though this is the first comprehensive
+book on the topic of deep learning on graphs, there are books on the general
+Book Website:https://yaoma24.github.io/dlg_book/14 Deep Learning on Graphs: An Introduction
+topics on deep learning (Goodfellow et al., 2016; Aggarwal, 2018), deep learn-
+ing on speech recognition (Yu and Deng, 2016; Kamath et al., 2019), and deep
+learning in natural language processing (Deng and Liu, 2018; Kamath et al.,
+2019).
+Book Website:https://yaoma24.github.io/dlg_book/PART ONE
+FOUNDATIONS
+Book Website:https://yaoma24.github.io/dlg_book/Book Website:https://yaoma24.github.io/dlg_book/

@@ -1,0 +1,32 @@
+# Python environments
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Mac OS
+.DS_Store
+
+# IDEs
+.idea/
+.vscode/
+
+# Datasets and outputs
+datasets/*.h5
+datasets/*.pkl
+# We DO want to upload datasets/*.zip 
+
+# Model checkpoints
+checkpoints/
+
+# Massive log files
+*.log
+
+# Experimental scripts (Only uploading Models 1-5 from report)
+src/train_stage1.py
+src/train_stage2.py
+src/test_transferability.py
+
+# Sub-projects that are their own repos
+esol_gcn_demo/

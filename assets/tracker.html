@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M.Tech Project — Progress Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --card: rgba(18,18,22,0.92);
+    --text: #e8e4d9;
+    --text2: #a09882;
+    --text3: #665e4f;
+    --border: rgba(180,160,110,0.15);
+    --accent: #c9a84c;
+    --check: #c9a84c;
+    --hover: rgba(201,168,76,0.06);
+    --phase-a: #c9a84c;
+    --phase-a5: #8ba65e;
+    --phase-b: #c47a3a;
+    --phase-c: #a86cad;
+    --phase-d: #4aad9b;
+    --phase-e: #7a8bc9;
+    --resources: #8ba65e;
+    --milestones: #c94c4c;
+    --math: #5a9bc9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0d0d0f url('bg.png') repeat;
+    background-size: 500px;
+    color: #e8e4d9;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* Top bar */
+  .topbar {
+    background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(18,18,22,0.95) 100%);
+    color: var(--accent);
+    padding: 0.55rem 2rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    text-align: center;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 2rem 3.5rem;
+  }
+
+  /* Header */
+  header { margin-bottom: 2.5rem; }
+
+  h1 {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -1px;
+    line-height: 1.15;
+  }
+
+  .subtitle {
+    color: var(--text2);
+    margin-top: 0.5rem;
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-style: italic;
+    font-size: 1.15rem;
+  }
+
+  .divider {
+    width: 40px;
+    height: 3px;
+    background: var(--accent);
+    margin-top: 1rem;
+  }
+
+  /* Stats grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent);
+    transition: width 0.6s ease;
+  }
+
+  .stat {
+    flex: 1;
+    background: rgba(18,18,22,0.8);
+    padding: 0.6rem 0.75rem;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .stat-card .stat-label {
+    font-size: 0.72rem;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.4rem;
+    font-weight: 600;
+  }
+
+  .stat-card.main {
+    grid-column: 1 / -1;
+    text-align: left;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .stat-card.main .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .stat-card.main .stat-value {
+    font-size: 2.6rem;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 0.85rem;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #c9a84c, #e8c860);
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+
+  /* Section */
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    border-left: 4px solid var(--border);
+    transition: box-shadow 0.2s;
+  }
+
+  .section:hover { box-shadow: 0 1px 8px rgba(0,0,0,0.04); }
+
+  .section[data-color="math"] { border-left-color: var(--math); }
+  .section[data-color="a"] { border-left-color: var(--phase-a); }
+  .section[data-color="a5"] { border-left-color: var(--phase-a5); }
+  .section[data-color="b"] { border-left-color: var(--phase-b); }
+  .section[data-color="c"] { border-left-color: var(--phase-c); }
+  .section[data-color="d"] { border-left-color: var(--phase-d); }
+  .section[data-color="e"] { border-left-color: var(--phase-e); }
+  .section[data-color="resources"] { border-left-color: var(--resources); }
+  .section[data-color="milestones"] { border-left-color: var(--milestones); }
+
+  .section-header {
+    padding: 1rem 1.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .section-header:hover { background: var(--hover); }
+
+  .section-title {
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .section-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    background: var(--hover);
+    color: var(--text2);
+  }
+
+  .section-right {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .section-progress {
+    font-size: 0.85rem;
+    color: var(--text3);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .section-bar {
+    width: 80px;
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .section-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .chevron {
+    transition: transform 0.2s;
+    color: #bbb;
+    font-size: 0.6rem;
+  }
+
+  .section.collapsed .chevron { transform: rotate(-90deg); }
+  .section-body { border-top: 1px solid var(--border); }
+  .section.collapsed .section-body { display: none; }
+
+  /* Items */
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.9rem 1.4rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .item:last-child { border-bottom: none; }
+  .item:hover { background: rgba(201,168,76,0.04); }
+
+  .item.done { opacity: 1; }
+  .item.done .item-text { color: #555; text-decoration: line-through; }
+  .item.done .item-meta { color: #3a3a3a; }
+
+  .checkbox {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    border: 2px solid #444;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+    transition: all 0.2s;
+    background: rgba(0,0,0,0.3);
+  }
+
+  .item:hover .checkbox {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+  }
+
+  .item.done .checkbox {
+    background: linear-gradient(135deg, #c9a84c, #a88530);
+    border-color: transparent;
+    animation: checkPop 0.25s ease;
+    box-shadow: 0 2px 8px rgba(201,168,76,0.3);
+  }
+
+  @keyframes checkPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .checkmark {
+    display: none;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 800;
+  }
+
+  .item.done .checkmark { display: block; }
+
+  .item-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text);
+    font-weight: 450;
+  }
+
+  .item-meta {
+    font-size: 0.82rem;
+    color: var(--text3);
+    margin-top: 0.2rem;
+    line-height: 1.4;
+  }
+
+  .item-tag {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    font-weight: 700;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .tag-skim { background: rgba(201,168,76,0.12); color: #c9a84c; }
+  .tag-critical { background: rgba(220,60,60,0.12); color: #e06060; }
+  .tag-week { background: rgba(80,140,220,0.12); color: #6aacf0; }
+
+  /* Footer */
+  .footer {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .reset-btn {
+    padding: 0.4rem 0.9rem;
+    background: transparent;
+    border: 1px solid rgba(220,60,60,0.3);
+    color: #e06060;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+
+  .reset-btn:hover { background: rgba(220,60,60,0.1); border-color: rgba(220,60,60,0.5); }
+
+  .save-note {
+    font-size: 0.68rem;
+    color: #444;
+    font-style: italic;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat-card.main { grid-column: 1 / -1; }
+    .container { padding: 1.5rem 1rem 2rem; }
+    h1 { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+<div class="topbar">Research Progress · 2026–2027</div>
+
+<div class="container">
+  <header>
+    <h1>Progress Tracker</h1>
+    <p class="subtitle">Foundation Models for Urban Mobility — 12-Month Research Roadmap</p>
+    <div class="divider"></div>
+  </header>
+
+  <div class="stats-grid">
+    <div class="stat-card main">
+      <div class="stat-row">
+        <span class="stat-label" style="font-size:0.72rem;">Overall Progress</span>
+        <span class="stat-value" id="overallPct">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="overallBar" style="width: 0%"></div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="papersDone">0</div>
+      <div class="stat-label">Papers Read</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="mathDone">0</div>
+      <div class="stat-label">Math Topics</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="milestonesDone">0</div>
+      <div class="stat-label">Milestones</div>
+    </div>
+  </div>
+
+  <div id="sections"></div>
+
+  <div class="footer">
+    <button class="reset-btn" onclick="resetAll()">Reset All Progress</button>
+    <span class="save-note">Progress saved automatically in your browser</span>
+  </div>
+</div>
+
+<script>
+const DATA = [
+  {
+    title: "Math Prerequisites",
+    badge: "Daily · Ongoing",
+    color: "math",
+    items: [
+      { id: "math-linalg", text: "Linear Algebra", meta: "Vectors, matrices, eigenvalues, eigenvectors, decomposition" },
+      { id: "math-graph", text: "Graph Theory & Spectral Graph Theory", meta: "Laplacian, GFT, Fiedler vector, spectral filtering" },
+      { id: "math-conv", text: "Signal Processing & Convolution", meta: "1D/2D convolution, frequency domain, graph convolution" }
+    ]
+  },
+  {
+    title: "Phase A — Foundations",
+    badge: "Week 1–3",
+    color: "a",
+    items: [
+      { id: "p1", text: "word2vec Explained — Goldberg & Levy (2014)", meta: "Mathematical derivation of Word2Vec" },
+      { id: "p2", text: "Efficient Estimation of Word Representations — Mikolov et al. (2013)", meta: "The original Word2Vec — embeddings concept" },
+      { id: "p3", text: "Attention Is All You Need — Vaswani et al. (NeurIPS 2017)", meta: "The Transformer architecture", tag: "critical" },
+      { id: "p4", text: "BERT — Devlin et al. (NAACL 2019)", meta: "Masked pre-training paradigm that TTM uses" }
+    ]
+  },
+  {
+    title: "Phase A.5 — GNN Foundations",
+    badge: "Week 2",
+    color: "a5",
+    items: [
+      { id: "p5", text: "GCN — Kipf & Welling (ICLR 2017)", meta: "The foundational graph neural network paper", tag: "critical" },
+      { id: "p6", text: "MPNN — Gilmer et al. (ICML 2017)", meta: "Unified message-passing framework" },
+      { id: "p7", text: "GAT — Veličković et al. (ICLR 2018)", meta: "Attention on graphs" }
+    ]
+  },
+  {
+    title: "Phase B — Time Series Deep Learning",
+    badge: "Week 3–4",
+    color: "b",
+    items: [
+      { id: "p8", text: "PatchTST (ICLR 2023)", meta: "Patching concept — basis for TTM architecture", tag: "critical" },
+      { id: "p9", text: "DLinear (AAAI 2023)", meta: "Counterpoint — simple linear models can compete" },
+      { id: "p10", text: "Informer (AAAI 2021)", meta: "First major Transformer for time series" },
+      { id: "p11", text: "Autoformer (NeurIPS 2021)", meta: "Series decomposition + auto-correlation" },
+      { id: "p12", text: "TSMixer (KDD 2023)", meta: "Direct architectural ancestor of TTM", tag: "critical" },
+      { id: "p13", text: "TS2Vec (AAAI 2022)", meta: "Alternate paradigm — not directly used", tag: "skim" }
+    ]
+  },
+  {
+    title: "Phase C — Time Series Foundation Models",
+    badge: "Week 4–6",
+    color: "c",
+    items: [
+      { id: "p14", text: "TTM: Tiny Time Mixers — IBM (NeurIPS 2024)", meta: "Your backbone model. Read three times.", tag: "critical" },
+      { id: "p15", text: "Chronos — Amazon (ICML 2024)", meta: "Key competitor — tokenization approach" },
+      { id: "p16", text: "TimesFM — Google (ICML 2024)", meta: "Key competitor — decoder-only approach" },
+      { id: "p17", text: "Moirai — Salesforce (ICML 2024)", meta: "Any-variate attention" },
+      { id: "p18", text: "Time-LLM (ICLR 2024)", meta: "Reprogramming paradigm" },
+      { id: "p19", text: "Lag-Llama (NeurIPS 2023)", meta: "Probabilistic forecasting", tag: "skim" },
+      { id: "p20", text: "One Fits All (NeurIPS 2023)", meta: "Cross-modal adaptation", tag: "skim" }
+    ]
+  },
+  {
+    title: "Phase D — Spatio-Temporal Models",
+    badge: "Week 6–8",
+    color: "d",
+    items: [
+      { id: "p21", text: "STGCN (IJCAI 2018)", meta: "Foundational spatio-temporal GNN" },
+      { id: "p22", text: "DCRNN (ICLR 2018)", meta: "Diffusion convolution for traffic" },
+      { id: "p23", text: "Graph WaveNet (IJCAI 2019)", meta: "Adaptive adjacency — learns graph from data" },
+      { id: "p24", text: "GPT-ST (NeurIPS 2023)", meta: "Pre-training for ST graphs" },
+      { id: "p25", text: "UniST (KDD 2024)", meta: "Closest to what you are building", tag: "critical" },
+      { id: "p26", text: "UrbanGPT (KDD 2024)", meta: "LLM reprogramming for ST data" },
+      { id: "p26b", text: "CISTGNN (2024)", meta: "Causal STGNNs & confounder mitigation", tag: "critical" },
+      { id: "p27", text: "Cross-City Transfer Learning (IJCAI 2018)", meta: "Transfer learning baseline" }
+    ]
+  },
+  {
+    title: "Phase E — Urban Domain",
+    badge: "Week 8–9",
+    color: "e",
+    items: [
+      { id: "p28", text: "UrbanCLIP (WWW 2024)", meta: "Multimodal urban understanding" },
+      { id: "p29", text: "BIGCity (ICDE 2025)", meta: "Latest unified urban model" },
+      { id: "p30", text: "TEMPO (ICLR 2024)", meta: "Prompt-based adaptation" },
+      { id: "p31", text: "STD-PLM (AAAI 2025)", meta: "Adapting PLMs for spatio-temporal data" }
+    ]
+  },
+  {
+    title: "Learning Resources",
+    badge: "Ongoing",
+    color: "resources",
+    items: [
+      { id: "r1", text: "Karpathy — Let's build GPT (YouTube)", meta: "Transformer from scratch in code", tag: "critical" },
+      { id: "r2", text: "CS224W — Week 2 videos (#1, #3, #8, #14)", meta: "GNN visual intuition" },
+      { id: "r3", text: "CS224W — Week 6 videos (#17–26)", meta: "GNN architecture depth" },
+      { id: "r4", text: "HuggingFace Time Series Course", meta: "Hands-on time series with Transformers", tag: "critical" },
+      { id: "r5", text: "IBM Granite TSFM Wiki + Tutorials", meta: "Your backbone codebase", tag: "critical" }
+    ]
+  },
+  {
+    title: "Milestones",
+    badge: "Key Checkpoints",
+    color: "milestones",
+    items: [
+      { id: "m1", text: "First 4 papers read", meta: "Target: Week 1", tag: "week" },
+      { id: "m2", text: "GCN + GAT + MPNN read", meta: "Target: Week 2", tag: "week" },
+      { id: "m3", text: "Dev environment set up", meta: "Target: Week 3", tag: "week" },
+      { id: "m4", text: "TTM paper read 3 times", meta: "Target: Week 4", tag: "week" },
+      { id: "m5", text: "First STGCN baseline running", meta: "Target: Week 6", tag: "week" },
+      { id: "m6", text: "Spatial adapter v1 implemented", meta: "Target: Week 10" },
+      { id: "m6b", text: "Causal adapter v2 implemented", meta: "Target: Week 12", tag: "week" },
+      { id: "m7", text: "First results on 2–3 datasets", meta: "Target: Week 12" },
+      { id: "m8", text: "Multi-domain data collected (NYC)", meta: "Target: Month 4" },
+      { id: "m9", text: "Heterogeneous urban graph built", meta: "Target: Month 4" },
+      { id: "m10", text: "Multi-task prediction working", meta: "Target: Month 5" },
+      { id: "m11", text: "Exhaustive evaluation complete", meta: "Target: Month 7" },
+      { id: "m12", text: "Cross-city transfer experiments done", meta: "Target: Month 9" },
+      { id: "m12b", text: "Causal Interventional Forecasting", meta: "Target: Month 10", tag: "week" },
+      { id: "m13", text: "Thesis draft complete", meta: "Target: Month 11" },
+      { id: "m14", text: "Defense", meta: "Target: Month 12" },
+      { id: "m15", text: "GitHub repo made public", meta: "Target: Month 12" }
+    ]
+  }
+];
+
+const STORAGE_KEY = "mtech_tracker_v4";
+const COLLAPSE_KEY = "mtech_collapse_v4";
+
+function load(key) {
+  try { return JSON.parse(localStorage.getItem(key)) || {}; } catch { return {}; }
+}
+function save(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+
+function toggleItem(id, e) {
+  e.stopPropagation();
+  const s = load(STORAGE_KEY);
+  s[id] = !s[id];
+  save(STORAGE_KEY, s);
+  updateUI();
+}
+
+function toggleSection(i) {
+  const s = load(COLLAPSE_KEY);
+  s[i] = !s[i];
+  save(COLLAPSE_KEY, s);
+  document.querySelector(`[data-si="${i}"]`).classList.toggle('collapsed');
+}
+
+function resetAll() {
+  if (confirm("Reset ALL progress? This cannot be undone.")) {
+    localStorage.removeItem(STORAGE_KEY);
+    updateUI();
+  }
+}
+
+function updateUI() {
+  const state = load(STORAGE_KEY);
+  let total = 0, done = 0, papers = 0, papersDone = 0, math = 0, mathDone = 0, mile = 0, mileDone = 0;
+
+  DATA.forEach(sec => {
+    let secDone = 0;
+    sec.items.forEach(item => {
+      const el = document.querySelector(`[data-id="${item.id}"]`);
+      const isDone = !!state[item.id];
+      if (el) { el.classList.toggle('done', isDone); }
+      total++; if (isDone) { done++; secDone++; }
+      if (sec.title.startsWith("Phase")) { papers++; if (isDone) papersDone++; }
+      if (sec.title === "Math Prerequisites") { math++; if (isDone) mathDone++; }
+      if (sec.title === "Milestones") { mile++; if (isDone) mileDone++; }
+    });
+    const counter = document.querySelector(`[data-cnt="${sec.title}"]`);
+    if (counter) counter.textContent = `${secDone} / ${sec.items.length}`;
+    const bar = document.querySelector(`[data-bar="${sec.title}"]`);
+    if (bar) bar.style.width = sec.items.length > 0 ? (secDone/sec.items.length*100)+'%' : '0%';
+  });
+
+  const pct = total > 0 ? Math.round(done/total*100) : 0;
+  document.getElementById("overallPct").textContent = pct + "%";
+  document.getElementById("overallBar").style.width = pct + "%";
+  document.getElementById("papersDone").textContent = `${papersDone}/${papers}`;
+  document.getElementById("mathDone").textContent = `${mathDone}/${math}`;
+  document.getElementById("milestonesDone").textContent = `${mileDone}/${mile}`;
+}
+
+function build() {
+  const state = load(STORAGE_KEY);
+  const col = load(COLLAPSE_KEY);
+  const container = document.getElementById("sections");
+
+  DATA.forEach((sec, i) => {
+    const secDone = sec.items.filter(it => state[it.id]).length;
+    const collapsed = col[i] === true;
+    const div = document.createElement("div");
+    div.className = "section" + (collapsed ? " collapsed" : "");
+    div.setAttribute("data-si", i);
+    div.setAttribute("data-color", sec.color);
+
+    div.innerHTML = `
+      <div class="section-header" onclick="toggleSection(${i})">
+        <span class="section-title">
+          <span class="chevron">▼</span>
+          ${sec.title}
+          <span class="section-badge">${sec.badge}</span>
+        </span>
+        <span class="section-right">
+          <span class="section-progress" data-cnt="${sec.title}">${secDone} / ${sec.items.length}</span>
+          <span class="section-bar"><span class="section-bar-fill" data-bar="${sec.title}" style="width:${sec.items.length>0?(secDone/sec.items.length*100):0}%"></span></span>
+          <span class="chevron">▼</span>
+        </span>
+      </div>
+      <div class="section-body">
+        ${sec.items.map(item => {
+          const isDone = !!state[item.id];
+          const tag = item.tag === "skim" ? '<span class="item-tag tag-skim">Skim</span>' :
+                      item.tag === "critical" ? '<span class="item-tag tag-critical">Critical</span>' :
+                      item.tag === "week" ? '<span class="item-tag tag-week">Milestone</span>' : '';
+          return `<div class="item ${isDone?'done':''}" data-id="${item.id}" onclick="toggleItem('${item.id}',event)">
+            <div class="checkbox"><span class="checkmark">✓</span></div>
+            <div><div class="item-text">${item.text}${tag}</div><div class="item-meta">${item.meta}</div></div>
+          </div>`;
+        }).join('')}
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+build();
+updateUI();
+</script>
+</body>
+</html>
