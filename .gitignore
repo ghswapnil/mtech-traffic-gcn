@@ -30,3 +30,16 @@ src/test_transferability.py
 
 # Sub-projects that are their own repos
 esol_gcn_demo/
+
+# ----------------------------------------------------
+# UNRELATED / DRAFT FILES (Ignored for clean repository)
+# ----------------------------------------------------
+plans/
+materials/
+BiweeklyReports/
+assets/
+scripts/
+gnn_intro/
+main.py
+plots/
+results/
