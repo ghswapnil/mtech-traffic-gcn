@@ -14,7 +14,8 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{cite}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
+\usepackage{soul}
 \usepackage{enumitem}
 \usepackage{float}
 
@@ -27,15 +28,16 @@
 
 % Title
 \title{
-    \textbf{Progress Report: Enhancing Time-Series Foundation Models \\
-    with Spatial Graph Adapters for Traffic Forecasting}
+    \textbf{Progress Report: Building Foundation Models for Urban Mobility and Smart Cities} \\
+    \large{Sub-Project: Enhancing Time-Series Foundation Models with Spatial Graph Adapters}
 }
 \author{
-    Swapnil Aggarwal \\
-    \textit{M.Tech, Department of Computer Science} \\
+    Swapnil Aggarwal (SID: 26040) \\
+    \textit{M.Tech in Smart Mobility and Logistics Systems} \\
+    \textit{CiSTUP, Indian Institute of Science (IISc)} \\
     \texttt{swapnila@iisc.ac.in} \\
     \vspace{0.3cm}
-    Under the supervision of \textbf{Professor Arjunan Panda} \\
+    Under the supervision of \textbf{Dr. Pandarasamy Arjunan} \\
     \textit{Energy Informatics Lab, IISc}
 }
 \date{July 2026}
@@ -56,7 +58,7 @@ This report presents our progress on adapting pre-trained time-series foundation
 Traffic forecasting on road sensor networks is a critical component of intelligent transportation systems. The core challenge is \textit{spatio-temporal}: predictions must account for both the temporal evolution of traffic patterns (e.g., rush hours, weekday vs.\ weekend) and the spatial propagation of congestion along the physical road network.
 
 \subsection{Motivation}
-State-of-the-art spatio-temporal models such as STGCN \cite{stgcn}, DCRNN \cite{dcrnn}, and Graph WaveNet \cite{graphwavenet} train \textit{all} model parameters---both temporal and spatial---from scratch on each target dataset. While effective, this approach has significant drawbacks:
+State-of-the-art spatio-temporal models such as STGCN, DCRNN, and Graph WaveNet train \textit{all} model parameters---both temporal and spatial---from scratch on each target dataset. While effective, this approach has significant drawbacks:
 \begin{itemize}[nosep]
     \item \textbf{High computational cost:} Training requires GPU clusters and hours of compute time.
     \item \textbf{No transfer:} Deploying to a new city requires full retraining from scratch.
@@ -66,7 +68,7 @@ State-of-the-art spatio-temporal models such as STGCN \cite{stgcn}, DCRNN \cite{
 Meanwhile, the natural language processing community has demonstrated that \textit{foundation models} (e.g., BERT, GPT) pre-trained on massive corpora can be adapted to downstream tasks with small, task-specific adapters, dramatically reducing training cost.
 
 \subsection{Research Question}
-\textit{Can a frozen, general-purpose time-series foundation model be enhanced with a lightweight spatial adapter to approach the accuracy of fully-trained spatio-temporal models?}
+\hl{\textit{Can a frozen, general-purpose time-series foundation model be enhanced with a lightweight spatial adapter to approach the accuracy of fully-trained spatio-temporal models?}}
 
 \subsection{Contributions}
 \begin{enumerate}[nosep]
@@ -82,7 +84,7 @@ Meanwhile, the natural language processing community has demonstrated that \text
 
 \subsection{Spatio-Temporal Traffic Forecasting}
 
-\textbf{STGCN} \cite{stgcn} combines graph convolutions with gated temporal convolutions in a sandwich architecture. \textbf{DCRNN} \cite{dcrnn} models traffic flow as a diffusion process on the road graph using a sequence-to-sequence architecture with scheduled sampling. \textbf{Graph WaveNet} \cite{graphwavenet} introduces an adaptive adjacency matrix learned jointly with dilated causal convolutions. \textbf{GMAN} \cite{gman} uses spatial-temporal attention mechanisms. \textbf{AGCRN} \cite{agcrn} proposes adaptive graph convolutional recurrent networks. These methods achieve state-of-the-art accuracy but require training all parameters from scratch on each dataset.
+\textbf{STGCN} combines graph convolutions with gated temporal convolutions in a sandwich architecture. \textbf{DCRNN} models traffic flow as a diffusion process on the road graph using a sequence-to-sequence architecture with scheduled sampling. \textbf{Graph WaveNet} introduces an adaptive adjacency matrix learned jointly with dilated causal convolutions. \textbf{GMAN} uses spatial-temporal attention mechanisms. \textbf{AGCRN} proposes adaptive graph convolutional recurrent networks. These methods achieve state-of-the-art accuracy but require training all parameters from scratch on each dataset.
 
 \subsection{Time-Series Foundation Models}
 
@@ -90,7 +92,7 @@ IBM's \textbf{Tiny Time Mixer (TTM)} \cite{ttm} is a compact, pre-trained time-s
 
 \subsection{Adapter-Based Fine-Tuning}
 
-Adapter methods, popularized in NLP \cite{houlsby2019adapters}, insert small trainable modules into frozen pre-trained models. This paradigm has been extended to vision (ViT adapters) and recently to time-series tasks. Our work applies this paradigm to spatio-temporal forecasting by treating the spatial graph network as the adapter module.
+Adapter methods, popularized in NLP, insert small trainable modules into frozen pre-trained models. This paradigm has been extended to vision (ViT adapters) and recently to time-series tasks. Our work applies this paradigm to spatio-temporal forecasting by treating the spatial graph network as the adapter module.
 
 % ============================================================
 \section{Methodology}
@@ -167,7 +169,7 @@ where $\mathcal{M} = \{(t,n) : y_{t,n} > 0.1\}$ is the set of valid sensor readi
 
 \subsection{Dataset: METR-LA}
 
-The METR-LA dataset \cite{dcrnn} contains traffic speed readings from 207 loop detectors on the Los Angeles highway network over 4 months (March--June 2012) at 5-minute intervals, totaling 34,272 time steps. We follow the standard 70/10/20 train/validation/test split.
+The METR-LA dataset contains traffic speed readings from 207 loop detectors on the Los Angeles highway network over 4 months (March--June 2012) at 5-minute intervals, totaling 34,272 time steps. We follow the standard 70/10/20 train/validation/test split.
 
 \subsection{Implementation Details}
 
@@ -219,7 +221,7 @@ To rigorously test our hypothesis, we developed a sequence of four models, each 
     \item \textbf{Model 1: Vanilla TTM (Zero-Shot).} The baseline pre-trained foundation model with no task-specific training and no spatial awareness.
     \item \textbf{Model 2: TTM Linear Probing.} The temporal foundation model with its internal prediction head fine-tuned on the target dataset, but still lacking spatial awareness.
     \item \textbf{Model 3: TTM + GCN Adapter (Direct).} A frozen temporal foundation model augmented with a trainable spatial graph network, using direct MLP fusion.
-    \item \textbf{Model 4: TTM + GCN Adapter (Residual).} Our final proposed architecture, where the spatial graph network learns a residual correction on top of the frozen temporal foundation model's zero-shot prediction.
+    \item \textbf{Model 4: TTM + GCN Adapter (Residual).} An advanced architecture variant, where the spatial graph network learns a residual correction on top of the frozen temporal foundation model's zero-shot prediction.
     \item \textbf{Model 5: Co-Fine-Tuned Head + Adapter.} Our ultimate model configuration, where we load the pre-trained temporal head weights from Model 2 and the pre-trained spatial adapter weights from Model 4, and train them jointly with a small learning rate to achieve optimal spatio-temporal alignment.
 \end{itemize}
 
@@ -229,7 +231,7 @@ Table~\ref{tab:main_results} compares our method against classical baselines, de
 
 \begin{table}[H]
 \centering
-\caption{Performance comparison on METR-LA. Best results in \textbf{bold}. Our method results in \underline{underline}. $^\dagger$Published results from original papers. $^\star$Task-specific trainable parameters (excluding frozen backbone).}
+\caption{Performance comparison on METR-LA. Best results in \textbf{bold}. Our proposed model is highlighted. $^\dagger$Published results from original papers. $^\star$Task-specific trainable parameters (excluding frozen backbone).}
 \label{tab:main_results}
 \resizebox{\textwidth}{!}{
 \begin{tabular}{l|ccc|ccc|ccc|r}
@@ -243,16 +245,16 @@ VAR$^\dagger$ & 4.42 & 7.89 & 10.2\% & 5.41 & 9.13 & 12.7\% & 6.52 & 10.11 & 15.
 FC-LSTM$^\dagger$ & 3.44 & 6.30 & 9.6\% & 3.77 & 7.23 & 10.9\% & 4.37 & 8.69 & 13.2\% & $\sim$500K \\
 \midrule
 STGCN$^\dagger$ & 2.88 & 5.74 & 7.6\% & 3.47 & 7.24 & 9.6\% & 4.59 & 9.40 & 12.7\% & $\sim$1.2M \\
-DCRNN$^\dagger$ & \textbf{2.77} & 5.38 & 7.3\% & 3.15 & 6.45 & 8.8\% & 3.60 & 7.60 & 10.5\% & $\sim$1.8M \\
-Graph WaveNet$^\dagger$ & 2.69 & \textbf{5.15} & \textbf{6.9\%} & \textbf{3.07} & \textbf{6.22} & \textbf{8.4\%} & 3.53 & 7.37 & 10.0\% & $\sim$2.5M \\
+DCRNN$^\dagger$ & 2.77 & 5.38 & 7.3\% & 3.15 & 6.45 & 8.8\% & 3.60 & 7.60 & 10.5\% & $\sim$1.8M \\
+Graph WaveNet$^\dagger$ & \textbf{2.69} & \textbf{5.15} & \textbf{6.9\%} & \textbf{3.07} & \textbf{6.22} & \textbf{8.4\%} & 3.53 & 7.37 & 10.0\% & $\sim$2.5M \\
 AGCRN$^\dagger$ & 2.87 & 5.54 & 7.7\% & 3.23 & 6.58 & 8.9\% & 3.62 & 7.56 & 10.4\% & $\sim$0.8M \\
 GMAN$^\dagger$ & 2.80 & 5.55 & 7.4\% & 3.12 & 6.49 & 8.7\% & \textbf{3.44} & \textbf{7.35} & \textbf{9.7\%} & $\sim$3.2M \\
 \midrule
 Model 1: Vanilla TTM (zero-shot) & 3.97 & 7.55 & 9.8\% & 4.90 & 9.28 & 12.4\% & 6.20 & 11.33 & 16.0\% & 0$^\star$ \\
 Model 2: TTM (Linear Probing) & 3.70 & 7.32 & 9.8\% & 4.47 & 8.88 & 12.3\% & 5.48 & 10.25 & 16.1\% & 98K$^\star$ \\
 Model 3: TTM + GCN Adapter & 3.59 & 6.50 & 9.8\% & 4.15 & 7.71 & 11.8\% & 4.88 & 8.98 & 14.9\% & 57K$^\star$ \\
-\underline{Model 4: TTM + GCN + Residual} & \underline{3.58} & \underline{6.47} & \underline{9.7\%} & \underline{4.16} & \underline{7.63} & \underline{11.9\%} & \underline{4.86} & \underline{8.92} & \underline{14.9\%} & \underline{57K$^\star$} \\
-\textbf{Model 5: Co-Fine-Tuned} & \textbf{3.52} & \textbf{6.57} & \textbf{9.5\%} & \textbf{4.07} & \textbf{7.69} & \textbf{11.7\%} & \textbf{4.75} & \textbf{8.86} & \textbf{14.8\%} & \textbf{156K$^\star$} \\
+Model 4: TTM + GCN + Residual & 3.58 & 6.47 & 9.7\% & 4.16 & 7.63 & 11.9\% & 4.86 & 8.92 & 14.9\% & 57K$^\star$ \\
+\rowcolor{yellow!30} Model 5: Co-Fine-Tuned & 3.52 & 6.57 & 9.5\% & 4.07 & 7.69 & 11.7\% & 4.75 & 8.86 & 14.8\% & 156K$^\star$ \\
 \bottomrule
 \end{tabular}
 }
@@ -306,10 +308,10 @@ Table~\ref{tab:residual} compares the direct fusion and residual fusion strategi
 \textbf{Metric} & \textbf{Direct Fusion} & \textbf{Residual Fusion} & \textbf{Change} \\
 \midrule
 Overall MAE & 5.8625 & 5.8415 & $-0.04$ \\
-Overall RMSE & 10.5135 & \textbf{10.3050} & $-0.21$ \\
-Overall MAPE & 19.01\% & \textbf{18.63\%} & $-0.38\%$ \\
+Overall RMSE & 10.5135 & 10.3050 & $-0.21$ \\
+Overall MAPE & 19.01\% & 18.63\% & $-0.38\%$ \\
 60-min MAE & 4.8833 & 4.8582 & $-0.03$ \\
-60-min RMSE & 8.9812 & \textbf{8.9205} & $-0.06$ \\
+60-min RMSE & 8.9812 & 8.9205 & $-0.06$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -373,7 +375,7 @@ This mathematically proves that temporal adaptation alone is insufficient for tr
 
 \subsection{Zero-Shot Spatial Transferability}
 
-To rigorously test the generalization capabilities of our proposed architecture, we conducted a zero-shot spatial transferability experiment. We directly transferred the \textbf{TTM + GCN + Residual} model trained exclusively on the METR-LA dataset (207 sensors in Los Angeles) to the unseen PEMS-BAY dataset (325 sensors in the San Francisco Bay Area). No retraining or fine-tuning was performed on the PEMS-BAY dataset.
+To rigorously test the generalization capabilities of our proposed architecture, we conducted a zero-shot spatial transferability experiment. We directly transferred our \textbf{Co-Fine-Tuned (Model 5)} model trained exclusively on the METR-LA dataset (207 sensors in Los Angeles) to the unseen PEMS-BAY dataset (325 sensors in the San Francisco Bay Area). No retraining or fine-tuning was performed on the PEMS-BAY dataset.
 
 Because our GCN spatial adapter applies convolution weights at the node feature level, the neural network parameters are entirely agnostic to the graph structure and node count. The model dynamically adapts to the new PEMS-BAY topology simply by swapping the adjacency matrix input during inference.
 
@@ -396,13 +398,13 @@ STGCN$^\dagger$ & 1.36 & 2.96 & 2.90\% & 1.81 & 4.27 & 4.17\% & 2.49 & 5.69 & 5.
 DCRNN$^\dagger$ & 1.38 & 2.95 & 2.90\% & 1.74 & 3.97 & 3.90\% & 2.07 & 4.74 & 4.90\% \\
 Graph WaveNet$^\dagger$ & \textbf{1.30} & \textbf{2.74} & \textbf{2.73\%} & \textbf{1.63} & \textbf{3.70} & \textbf{3.67\%} & \textbf{1.95} & \textbf{4.52} & \textbf{4.63\%} \\
 \midrule
-\textbf{Our Model (Zero-Shot)} & 2.11 & 4.99 & 6.07\% & 2.47 & 5.76 & 7.11\% & 2.86 & 6.53 & 8.22\% \\
+\textbf{Our Model (Zero-Shot)} & 2.07 & 5.04 & 6.03\% & 2.39 & 5.70 & 6.94\% & 2.81 & 6.49 & 8.15\% \\
 \bottomrule
 \end{tabular}
 }
 \end{table}
 
-Remarkably, our model achieved a zero-shot MAE of \textbf{2.86} at 60 minutes on PEMS-BAY. While it understandably trails the fully-supervised deep learning models like Graph WaveNet (which were trained for hundreds of epochs on the PEMS-BAY data itself), \textbf{our zero-shot model successfully outperforms traditional baselines}. At the 60-minute horizon, our zero-shot model (MAE 2.86) comfortably beats the ARIMA baseline (MAE 3.38) and the Historical Average baseline (MAE 2.88) without ever seeing a single data point from PEMS-BAY during training. It is also surprisingly close to a fully-trained STGCN (MAE 2.49). This definitively proves the graph-agnostic robustness and instant transferability of our architecture.
+Remarkably, our model achieved a zero-shot MAE of \textbf{2.81} at 60 minutes on PEMS-BAY. While it understandably trails the fully-supervised deep learning models like Graph WaveNet (which were trained for hundreds of epochs on the PEMS-BAY data itself), \textbf{our zero-shot model successfully outperforms traditional baselines}. At the 60-minute horizon, our zero-shot model (MAE 2.81) comfortably beats the ARIMA baseline (MAE 3.38) and the Historical Average baseline (MAE 2.88) without ever seeing a single data point from PEMS-BAY during training. It is also surprisingly close to a fully-trained STGCN (MAE 2.49). This definitively proves the graph-agnostic robustness and instant transferability of our architecture.
 
 % ============================================================
 \section{Limitations and Honest Assessment}
@@ -434,7 +436,7 @@ A common intuition in deep learning is to simply train for more epochs. However,
 \subsection{Proposed Upgrades}
 
 \begin{enumerate}
-    \item \textbf{Supervised Fine-Tuning on Target Domains:} Our PEMS-BAY results are currently zero-shot. If we train the adapter directly on the PEMS-BAY training set, the model will adapt to the specific traffic characteristics of the Bay Area, likely dropping the 60-minute MAE from 2.86 down to the $\sim$1.90 range, making it highly competitive with Graph WaveNet.
+    \item \textbf{Supervised Fine-Tuning on Target Domains:} Our PEMS-BAY results are currently zero-shot. If we train the adapter directly on the PEMS-BAY training set, the model will adapt to the specific traffic characteristics of the Bay Area, likely dropping the 60-minute MAE from 2.81 down to the $\sim$1.90 range, making it highly competitive with Graph WaveNet.
     
     \item \textbf{Partial TTM Unfreezing (Training More Parameters):} Currently, 93.3\% of the model's parameters (the TTM backbone) are strictly frozen to preserve general time-series knowledge. By selectively unfreezing the final 2 to 3 decoder layers of the TTM model with a very small learning rate, we can allow the temporal backbone to adapt specifically to highway traffic dynamics (like extreme rush hour spikes) without destroying its foundational knowledge.
     
@@ -455,26 +457,20 @@ We have demonstrated that a pre-trained time-series foundation model (TTM) can b
 % ============================================================
 \begin{thebibliography}{10}
 
-\bibitem{stgcn}
-B.~Yu, H.~Yin, and Z.~Zhu, ``Spatio-temporal graph convolutional networks: A deep learning framework for traffic forecasting,'' in \textit{Proc. IJCAI}, 2018.
-
-\bibitem{dcrnn}
-Y.~Li, R.~Yu, C.~Shahabi, and Y.~Liu, ``Diffusion convolutional recurrent neural network: Data-driven traffic forecasting,'' in \textit{Proc. ICLR}, 2018.
-
-\bibitem{graphwavenet}
-Z.~Wu, S.~Pan, G.~Long, J.~Jiang, and C.~Zhang, ``Graph WaveNet for deep spatial-temporal graph modeling,'' in \textit{Proc. IJCAI}, 2019.
-
-\bibitem{gman}
-C.~Zheng, X.~Fan, C.~Wang, and J.~Qi, ``GMAN: A graph multi-attention network for traffic prediction,'' in \textit{Proc. AAAI}, 2020.
-
-\bibitem{agcrn}
-L.~Bai, L.~Yao, C.~Li, X.~Wang, and C.~Wang, ``Adaptive graph convolutional recurrent network for traffic forecasting,'' in \textit{Proc. NeurIPS}, 2020.
+\bibitem{gcn}
+T.~N.~Kipf and M.~Welling, ``Semi-supervised classification with graph convolutional networks,'' in \textit{Proc. ICLR}, 2017.
 
 \bibitem{ttm}
 V.~Ekambaram, A.~Jati, N.~Nguyen, P.~Dayama, C.~Reddy, W.~Gifford, and J.~Kalagnanam, ``Tiny Time Mixers (TTMs): Fast pre-trained models for enhanced zero/few-shot forecasting of multivariate time series,'' in \textit{Proc. NeurIPS}, 2024.
 
-\bibitem{houlsby2019adapters}
-N.~Houlsby, A.~Girgis, S.~Jastrzebski, B.~Morrone, Q.~de~Laroussilhe, A.~Gesmundo, M.~Attariyan, and S.~Gelly, ``Parameter-efficient transfer learning for NLP,'' in \textit{Proc. ICML}, 2019.
+\bibitem{patchtst}
+Y.~Nie, N.~H.~Nguyen, P.~Sinthong, and J.~Kalagnanam, ``A time series is worth 64 words: Long-term forecasting with transformers,'' in \textit{Proc. ICLR}, 2023.
+
+\bibitem{attention}
+A.~Vaswani et al., ``Attention is all you need,'' in \textit{Proc. NeurIPS}, 2017.
+
+\bibitem{dlg}
+Y.~Ma and J.~Tang, \textit{Deep Learning on Graphs}. Cambridge University Press, 2021.
 
 \end{thebibliography}
 
