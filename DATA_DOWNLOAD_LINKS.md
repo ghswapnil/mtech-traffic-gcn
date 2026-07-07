@@ -21,7 +21,7 @@ These datasets measure the average velocity of vehicles passing through highway 
 
 *   **Seattle Freeway Dataset**
     *   **Description:** Traffic speed data from 323 loop detectors in Seattle over a one-month period.
-    *   **Download:** [Transdim Repository](https://github.com/xinyuanchen/transdim)
+    *   **Download:** [Transdim Repository (Seattle Folder)](https://github.com/xinychen/transdim/tree/master/datasets/Seattle-data-set)
 
 ## 2. Traffic Flow / Volume Datasets
 These datasets predict *how many* cars are passing through a sensor per 5-minute interval (traffic volume).
